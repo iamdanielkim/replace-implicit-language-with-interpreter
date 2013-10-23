@@ -32,4 +32,27 @@ public class ProductFinder {
         return foundProducts;
     }
 
+    public List<Product> byColorSizeAndBelowPrice(Color color, ProductSize size,
+            float price) {
+        List<Product> foundProducts = new ArrayList<Product>();
+        for (Product product : productRepository) {
+            if (product.getColor() == color 
+                    && product.getSize() == size
+                    && product.getPrice() < price) {
+                foundProducts.add(product);
+            }
+        }
+        return foundProducts;
+    }
+
+    public List<Product> belowPriceAvoidingAColor(float price, Color color) {
+        List<Product> foundProducts = new ArrayList<Product>();
+        for (Product product : productRepository) {
+            if (product.getPrice() < price && product.getColor() != color) {
+                foundProducts.add(product);
+            }
+        }
+        return foundProducts;
+    }
+
 }

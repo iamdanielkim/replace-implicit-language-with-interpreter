@@ -59,6 +59,24 @@ public class ProductFinderTests {
         }
     }
 
-
+    @Test
+    public void testFindByColorSizeAndBelowPrice() {
+        List<Product> foundProducts = finder.byColorSizeAndBelowPrice(Color.red, ProductSize.SMALL, 10.00f);
+        assertEquals("found no small red products below $10.00", 0, foundProducts.size());
+        foundProducts = finder.byColorSizeAndBelowPrice(Color.red, ProductSize.MEDIUM, 10.00f);
+        assertEquals("found firetruck when looking for cheap medium red toys", fireTruck, foundProducts.get(0) );
+    }
+    
+    @Test
+    public void testFindBelowPriceAvoidingAColor() {
+        List<Product> foundProducts = finder.belowPriceAvoidingAColor(9.00f, Color.white);
+        assertEquals("found 1 non-white product < $9.00", 1, foundProducts.size() );
+        assertTrue("found fireTruck", foundProducts.contains(fireTruck));
+        foundProducts = finder.belowPriceAvoidingAColor(9.00f, Color.red);
+        assertEquals("found one non red product", 1, foundProducts.size());
+        assertTrue("found baseball", foundProducts.contains(baseball));
+    }
+    
+    
 
 }
