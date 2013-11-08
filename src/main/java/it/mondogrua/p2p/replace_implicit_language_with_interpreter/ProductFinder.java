@@ -13,9 +13,10 @@ public class ProductFinder {
     }
 
     public List<Product> byColor(Color colorOfProductToFind) {
+        SpecColor spec = new SpecColor(colorOfProductToFind);
         List<Product> foundProducts = new ArrayList<Product>();
         for (Product product: productRepository) {
-            if (product.getColor().equals(colorOfProductToFind)) {
+            if (spec.isSatisfiedBy(product)) {
                 foundProducts.add(product);
             }
         }
@@ -23,9 +24,10 @@ public class ProductFinder {
     }
 
     public List<Product> byPrice(float priceLimit) {
+        Spec spec = new SpecPrice(priceLimit);
         List<Product> foundProducts = new ArrayList<Product>();
         for (Product product : productRepository) {
-            if (product.getPrice() == priceLimit) {
+            if (spec.isSatisfiedBy(product)) {
                 foundProducts.add(product);
             }
         }
@@ -34,11 +36,14 @@ public class ProductFinder {
 
     public List<Product> byColorSizeAndBelowPrice(Color color, ProductSize size,
             float price) {
+        SpecColor specColor = new SpecColor(color);
+        SpecSize specSize = new SpecSize(size);
+        SpecBelowPrice specBelowPrice = new SpecBelowPrice(price);
         List<Product> foundProducts = new ArrayList<Product>();
         for (Product product : productRepository) {
-            if (product.getColor() == color 
-                    && product.getSize() == size
-                    && product.getPrice() < price) {
+            if (specColor.isSatisfiedBy(product)
+                    && specSize.isSatisfiedBy(product)
+                    && product.getPrice() < specBelowPrice.getPrice()) {
                 foundProducts.add(product);
             }
         }
