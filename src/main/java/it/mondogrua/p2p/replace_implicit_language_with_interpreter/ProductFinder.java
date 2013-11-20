@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main class to refactor
+ */
 public class ProductFinder {
 
     private final ProductRepository productRepository;
